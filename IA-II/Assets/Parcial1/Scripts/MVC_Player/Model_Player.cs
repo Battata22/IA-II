@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Model_Player
@@ -38,48 +39,32 @@ public class Model_Player
 
     public void Movement()
     {
-        #region Nono
-        //if (Mathf.Abs(_playerScript.Rb.velocity.x) > _playerScript.Speed) return;
-        //if (_playerScript.Rb.velocity.x > _playerScript.Speed || _playerScript.Rb.velocity.x < -_playerScript.Speed) return;
-        //if (_playerScript.InputDir > 0 && _playerScript.Rb.velocity.x < 0) _playerScript.Rb.velocity = new Vector2(-_playerScript.Rb.velocity.x, _playerScript.Rb.velocity.y);
-        //if (_playerScript.InputDir < 0 && _playerScript.Rb.velocity.x > 0) _playerScript.Rb.velocity = new Vector2(_playerScript.Rb.velocity.x, _playerScript.Rb.velocity.y);
+        _playerScript.Rb.velocity = new Vector3(_playerScript.InputDirX, _playerScript.InputDirY, 0).normalized * _playerScript.Speed * Time.fixedDeltaTime;
 
-        //_dir = new Vector2(_playerScript.InputDir, 0);
-
-        ////_playerScript.Rb.position += _dir * _playerScript.Speed * _playerScript.Runner.DeltaTime;
-        //_playerScript.Rb.velocity += _dir * _playerScript.Speed * _playerScript.Runner.DeltaTime;
-        ////_playerScript.Rb.AddForce(_dir * _playerScript.Speed * _playerScript.Runner.DeltaTime, ForceMode2D.Impulse);
-
-        //if(Mathf.Abs(_playerScript.Rb.velocity.x) > _playerScript.Speed)
-        //    _playerScript.Rb.velocity = new Vector2(_playerScript.Speed * _playerScript.InputDir, _playerScript.Rb.velocity.y); 
-        #endregion
-
-        _playerScript.Rb.velocity = new Vector2(_playerScript.InputDirX * _playerScript.Speed, _playerScript.Rb.velocity.y);
-
-    }
-
-    public void Jump()
-    {
-        _playerScript.SetGroundedFalse();
-
-        if (_playerScript.JumpsLeft > 0)
-        {
-            _playerScript.ReduceJump();
-            _playerScript.Rb.velocity = new Vector2(_playerScript.Rb.velocity.x, 0);
-            _playerScript.Rb.velocity += (Vector2.up * _playerScript.JumpForce);
-        }
     }
 
     public void Still()
     {
-        _playerScript.Rb.velocity = new Vector2(0, _playerScript.Rb.velocity.y);
+        if (_playerScript.Rb.velocity != Vector3.zero)
+        _playerScript.Rb.velocity = new Vector3(0, 0, 0);
     }
 
-    public void Pound()
+    public void AoE()
     {
-        if (_playerScript.IsGrounded) return;
-        _playerScript.Rb.velocity += (-Vector2.up * _playerScript.PoundForce * _playerScript.Runner.DeltaTime);
-    }
+        Collider[] _objectsInRange = Physics.OverlapSphere(_playerScript.transform.position, _playerScript.AoERadius);
 
+        if (_objectsInRange != null)
+        {
+            foreach (var o in _objectsInRange)
+            {
+                Debug.Log(o.name + " ANTES");
+            }
+
+            var _enemies = _objectsInRange.Where(_objectsInRange => _objectsInRange is IEnemy);
+
+             foreach (var e in _enemies)
+                Debug.Log(e.name);
+        }
+    }
 
 }

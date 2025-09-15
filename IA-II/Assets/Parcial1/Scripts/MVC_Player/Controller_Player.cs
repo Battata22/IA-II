@@ -9,7 +9,6 @@ public class Controller_Player
     Model_Player _model;
 
     bool _moving = false;
-    bool _pounding = false;
 
     //Constructor para pedir variables
     public Controller_Player(PlayerBehaviour playerScript, Model_Player model)
@@ -30,7 +29,7 @@ public class Controller_Player
         _playerScript.InputDirX = Input.GetAxisRaw("Horizontal");
         _playerScript.InputDirY = Input.GetAxisRaw("Vertical");
 
-        if (_playerScript.InputDirX != 0)
+        if (_playerScript.InputDirX != 0  || _playerScript.InputDirY != 0)
         {
             _moving = true;
         }
@@ -40,19 +39,9 @@ public class Controller_Player
             _model.Still();
         }
 
-        if (_playerScript.InputDirY < 0)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            _pounding = true;
-        }
-        else
-        {
-            _pounding = false;
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Space) && !Input.GetKeyDown(KeyCode.S))
-        {
-            _model.Jump();
+            _model.AoE();
         }
     }
 
@@ -62,26 +51,11 @@ public class Controller_Player
         {
             _model.Movement();
         }
-        if (_pounding)
-        {
-            _model.Pound();
-        }
     }
 
-    public void FakeOnTriggerEnter2D(Collider2D collision)
+    public void FakeOnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.layer == 6)
-        {
-            _playerScript.GroundTouched();
-        }
-    }
 
-    public void FakeOnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 6)
-        {
-            _playerScript.SetGroundedFalse();
-        }
     }
 
     public void FakeOnDestroy()
