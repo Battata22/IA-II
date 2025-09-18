@@ -43,6 +43,10 @@ public class Controller_Player
         {
             _model.AoE();
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            var test = _model.ReturnKills();
+        }
     }
 
     public void FakeFixedUpdate()

@@ -7,11 +7,9 @@ using UnityEngine;
 public class RatBehaviour : BaseEnemy, IDamageable
 {
 
-
-
     protected override void Awake()
     {
-
+        _hp = _maxHp;
     }
 
     protected override void Start()

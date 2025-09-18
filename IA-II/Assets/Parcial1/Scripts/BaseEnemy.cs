@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseEnemy : MonoBehaviour, IEnemy
+public abstract class BaseEnemy : BaseCharacter, IEnemy
 {
 
     protected EnemyType _enemyType;

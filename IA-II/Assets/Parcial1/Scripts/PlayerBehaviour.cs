@@ -103,6 +103,11 @@ public class PlayerBehaviour : MonoBehaviour, IPlayer
         return transform;
     }
 
+    public void destroyAlgo(GameObject o)
+    {
+        Destroy(o);
+    }
+
 
     //-----------------------------Gizmos---------------------------------
 

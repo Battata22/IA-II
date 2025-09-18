@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,10 +14,14 @@ public class Model_Player
         _playerScript = playerScript;
     }
 
+    List<string> _kills = new();
+
     #region Fakes
     public void FakeStart()
     {
-
+        _kills.Add("Primero");
+        _kills.Add("Segundo");
+        _kills.Add("Tercero");
     }
 
     public void FakeUpdate()
@@ -46,7 +49,7 @@ public class Model_Player
     public void Still()
     {
         if (_playerScript.Rb.velocity != Vector3.zero)
-        _playerScript.Rb.velocity = new Vector3(0, 0, 0);
+            _playerScript.Rb.velocity = new Vector3(0, 0, 0);
     }
 
     public void AoE()
@@ -55,16 +58,34 @@ public class Model_Player
 
         if (_objectsInRange != null)
         {
-            foreach (var o in _objectsInRange)
+            var c = _objectsInRange.Where(x => x.GetComponent<RatBehaviour>())
+                .Select(c => c.GetComponent<RatBehaviour>())
+                .OrderBy(v => v.Hp);
+
+            if (c.Any(z => z.Hp < z.MaxHp * 0.1f))
             {
-                Debug.Log(o.name + " ANTES");
+                var des = c.First();
+                var obj = new { a = c.First().gameObject.transform, b = des.GetComponent<Renderer>().material, c = des.Hp, d = des.gameObject.name};
+                _playerScript.destroyAlgo(des.gameObject);
+
+                _kills.Add(obj.d);
+
+                if (obj.b.color == Color.blue)
+                {
+                    Debug.Log("Mataste a una rata rara");
+                }
+                if (Vector3.Distance(obj.a.position, _playerScript.transform.position) == _playerScript.AoERadius)
+                {
+                    Debug.Log("Justo al limite");
+                }
             }
-
-            var _enemies = _objectsInRange.Where(_objectsInRange => _objectsInRange is IEnemy);
-
-             foreach (var e in _enemies)
-                Debug.Log(e.name);
         }
+    }
+
+    public IEnumerable<string> ReturnKills()
+    {
+        yield return _kills.First();
+        _kills.RemoveAt(0);
     }
 
 }
