@@ -26,6 +26,10 @@ public class RatBehaviour : BaseEnemy
 
     public override void GetDamage(float damage)
     {
-        
+        Hp -= (int)damage;
+        if (Hp <= 0 )
+        {
+            Destroy(gameObject);
+        }
     }
 }

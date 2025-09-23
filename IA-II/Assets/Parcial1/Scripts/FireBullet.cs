@@ -15,14 +15,7 @@ public class FireBullet : MonoBehaviour
     [SerializeField] List<BaseEnemy> ordenados = new();
     void Start()
     {
-        
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            StartCoroutine(FireZone());
-        }
+        StartCoroutine(FireZone());
     }
     IEnumerator FireZone()
     {
@@ -37,7 +30,9 @@ public class FireBullet : MonoBehaviour
 
             foreach (var e in c)
             {
-                e.GetDamage(UnityEngine.Random.Range(1, dmg));
+                var ran = UnityEngine.Random.Range(1, dmg);
+                e.GetDamage(ran);
+                print(ran);
                 tupleList.Add((e.gameObject, e.Hp));
             }
             c.OrderBy(c => c.Hp);
