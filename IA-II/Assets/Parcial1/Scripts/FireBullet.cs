@@ -11,14 +11,18 @@ public class FireBullet : MonoBehaviour
     [SerializeField] float fireTime;
     [SerializeField] float fireRange;
     [SerializeField] float dmg;
+    [SerializeField] List<(GameObject, float)> tupleList = new List<(GameObject, float)> ();
+    [SerializeField] List<BaseEnemy> ordenados = new();
     void Start()
     {
-        StartCoroutine(FireZone());
+        
     }
-    public void FireDmg(float dmg)
+    private void Update()
     {
-        hp -= dmg;
-
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            StartCoroutine(FireZone());
+        }
     }
     IEnumerator FireZone()
     {
@@ -29,17 +33,21 @@ public class FireBullet : MonoBehaviour
         if (_playerRange != null)
         {
             var c = _playerRange.Where(x => x.GetComponent<BaseEnemy>())
-                .Select(c => c.GetComponent<BaseEnemy>())
-                .Select(c => c.FireDmg(dmg));
-                var enemyData = new { enemyName = c.Name, enemyHp = c.Hp}
-                .OrderBy(c => c.enemyHp)
-                .ToList();               
+                .Select(y => y.GetComponent<BaseEnemy>());
+
+            foreach (var e in c)
+            {
+                e.GetDamage(UnityEngine.Random.Range(1, dmg));
+                tupleList.Add((e.gameObject, e.Hp));
+            }
+            c.OrderBy(c => c.Hp);
+            ordenados = c.ToList();
+            
         }
 
-        Debug.Log($"Cantidad de enemigos afectados: ");
-        foreach (var c in _playerRange)
+        foreach (var c in ordenados)
         {
-            Debug.Log($"{c.enemyName} tiene {c.enemyHp} de vida");
+            Debug.Log($"{c.name} tiene {c.Hp} de vida");
         }
 
         StartCoroutine(FireZone());

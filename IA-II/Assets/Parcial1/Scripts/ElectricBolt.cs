@@ -14,23 +14,23 @@ public class ElectricBolt : MonoBehaviour
     List<BaseEnemy> targetList;
     Transform target;
 
-    void ElectricDamage()
-    {
-        hp -= electricDmg;
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ElectricLighting();
-        }
-    }
-    public void ElectricLighting()
-    {
-        var bounces = Enumerable.Range(0, maxBounces)
-            .Select(bounces => closeEnemy)
-            .Where(c => c.Hp > 0 && Vector3.Distance(transform.position, c.Position) <= jumpRange)
-            .OrderBy(c => Vector3.Distance(firstTarget.Position, ))
-            .ToList();          
-    }
+    //void ElectricDamage()
+    //{
+    //    hp -= electricDmg;
+    //}
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Alpha2))
+    //    {
+    //        ElectricLighting();
+    //    }
+    //}
+    //public void ElectricLighting()
+    //{
+    //    var bounces = Enumerable.Range(0, maxBounces)
+    //        .Select(bounces => closeEnemy)
+    //        .Where(c => c.Hp > 0 && Vector3.Distance(transform.position, c.Position) <= jumpRange)
+    //        .OrderBy(c => Vector3.Distance(firstTarget.Position, ))
+    //        .ToList();          
+    //}
 }

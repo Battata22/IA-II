@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseEnemy : BaseCharacter, IEnemy
+public abstract class BaseEnemy : BaseCharacter, IEnemy, IDamageable
 {
 
     protected EnemyType _enemyType;
@@ -30,6 +30,8 @@ public abstract class BaseEnemy : BaseCharacter, IEnemy
 
     }
 
-
-
+    public virtual void GetDamage(float damage)
+    {
+        
+    }
 }

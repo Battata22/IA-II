@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 
-public class RatBehaviour : BaseEnemy, IDamageable
+public class RatBehaviour : BaseEnemy
 {
 
     protected override void Awake()
@@ -24,7 +24,7 @@ public class RatBehaviour : BaseEnemy, IDamageable
     }
 
 
-    public void GetDamage(float damage)
+    public override void GetDamage(float damage)
     {
         
     }

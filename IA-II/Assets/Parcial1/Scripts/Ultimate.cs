@@ -13,31 +13,31 @@ public class Ultimate : PlayerBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Collider[] ultRange = Physics.OverlapSphere(transform.position, range);
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    Collider[] ultRange = Physics.OverlapSphere(transform.position, range);
 
-            if (ultRange != null)
-            {
-                var c = ultRange.Where(x => x.GetComponent<BaseEnemy>());
-                    
-                if (c.Any())
-                {
-                    ultRange.Select(x => x.GetComponent<BaseEnemy>())
-                    .Select()
-                }
-                else
-                {
-                    player.Hp -= failDmg;
-                }
-            }
+        //    if (ultRange != null)
+        //    {
+        //        var c = ultRange.Where(x => x.GetComponent<BaseEnemy>());
 
-        }
+        //        if (c.Any())
+        //        {
+        //            ultRange.Select(x => x.GetComponent<BaseEnemy>())
+        //            .Select();
+        //        }
+        //        else
+        //        {
+        //            player.Hp -= failDmg;
+        //        }
+        //    }
 
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
+    //    }
+
+    //}
+    //private void ondrawgizmos()
+    //{
+    //    gizmos.color = color.red;
+    //    gizmos.drawwiresphere(transform.position, range);
     }
 }

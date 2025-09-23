@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class EnemyNBehaviour : BaseEnemy, IDamageable
+public class EnemyNBehaviour : BaseEnemy
 {
 
     protected override void Awake()
@@ -23,7 +23,7 @@ public class EnemyNBehaviour : BaseEnemy, IDamageable
     }
 
 
-    public void GetDamage(float damage)
+    public override void GetDamage(float damage)
     {
 
     }
