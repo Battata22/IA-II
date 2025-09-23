@@ -9,7 +9,6 @@ public class ClickManager : MonoBehaviour
     public PlayerBehaviour _player;
     public (BaseEnemy, Transform) tupla;
 
-
     void Update()
     {
         if (Input.GetMouseButton(0))
