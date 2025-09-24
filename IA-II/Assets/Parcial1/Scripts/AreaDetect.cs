@@ -61,7 +61,7 @@ public class AreaDetect : MonoBehaviour
 
             _npcsInRange = c.ToArray();
 
-            if (_npcsInRange.Any())
+            if (_npcsInRange.Length > 0)
 
                 foreach (var e in _npcsInRange)
                 {
