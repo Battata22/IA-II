@@ -14,6 +14,10 @@ public abstract class BaseEnemy : BaseCharacter, IEnemy, IDamageable
     protected Transform _targetTransform;
     public Transform TargetTransform { get { return _targetTransform; } private set { _targetTransform = value; } }
 
+    [SerializeField] protected bool _isStuned = false;
+    public bool IsStuned { get { return _isStuned; } private set { _isStuned = value; } }
+
+
 
     protected virtual void Awake()
     {
@@ -27,11 +31,29 @@ public abstract class BaseEnemy : BaseCharacter, IEnemy, IDamageable
 
     protected virtual void Update()
     {
-
+        if (!IsStuned)
+        {
+            //Movement();
+        }
     }
 
     public virtual void GetDamage(float damage)
     {
         
+    }
+
+    public void GetStuned(float stunTime = 2)
+    {
+        if (!IsStuned)
+        {
+            StartCoroutine(Stun(stunTime));
+        }
+    }
+
+    IEnumerator Stun(float stunTime)
+    {
+        IsStuned = true;
+        yield return new WaitForSeconds(stunTime);
+        IsStuned = false;
     }
 }

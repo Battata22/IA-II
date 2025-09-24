@@ -2,33 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-
-public class RatBehaviour : BaseEnemy
+public class GolemBehaviour : BaseEnemy
 {
 
     protected override void Awake()
     {
         _hp = _maxHp;
-        _enemyType = EnemyType.Rat;
+        _enemyType = EnemyType.Golem;
     }
 
     protected override void Start()
     {
-        
+
     }
 
-    
+
     protected override void Update()
     {
-        
+
     }
 
 
     public override void GetDamage(float damage)
     {
         Hp -= (int)damage;
-        if (Hp <= 0 )
+        if (Hp <= 0)
         {
             Destroy(gameObject);
         }

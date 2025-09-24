@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-public class PlayerBehaviour : MonoBehaviour, IPlayer
+public class PlayerBehaviour : MonoBehaviour, IPlayer, IDamageable
 {
     //------------------------MVC-------------------------
     Model_Player _model;
@@ -108,6 +108,20 @@ public class PlayerBehaviour : MonoBehaviour, IPlayer
         Destroy(o);
     }
 
+    public void GetDamage(float damage)
+    {
+        Hp -= (int)damage;
+        if (Hp <= 0)
+        {
+            print("Murio el player");
+            //Destroy(gameObject);
+        }
+        else
+        {
+            print("player HP = " + Hp);
+        }
+    }
+
 
     //-----------------------------Gizmos---------------------------------
 
@@ -116,5 +130,6 @@ public class PlayerBehaviour : MonoBehaviour, IPlayer
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(transform.position, _aoERadius);
     }
+
 
 }
