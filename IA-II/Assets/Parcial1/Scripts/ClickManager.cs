@@ -22,6 +22,7 @@ public class ClickManager : MonoBehaviour
                 var enemies = Physics.OverlapSphere(v3, _grabRange);
 
                 var c = enemies.Where(x => x.GetComponent<BaseEnemy>())
+                //var c = enemies.OfType<BaseEnemy>()
                         .Select(c => c.GetComponent<BaseEnemy>())
                             .OrderBy(v => Vector3.Distance(v.transform.position, _player.transform.position));
 
