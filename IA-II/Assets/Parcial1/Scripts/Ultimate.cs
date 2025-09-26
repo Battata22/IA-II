@@ -28,7 +28,7 @@ public class Ultimate : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             var x = LastAffectedList();
-            foreach (var enemy in affected)
+            foreach (var enemy in x)
             {
                 print(enemy);
             }            

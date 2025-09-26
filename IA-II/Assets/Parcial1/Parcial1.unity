@@ -2416,6 +2416,7 @@ MonoBehaviour:
   range: 2
   dmg: 10
   penal: 0.5
+  affected: []
 --- !u!1 &1003910731
 GameObject:
   m_ObjectHideFlags: 0
@@ -3786,6 +3787,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 253512361}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1957239833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1957239834}
+  m_Layer: 0
+  m_Name: ElectricBolt - FireBullet - Ultimate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1957239834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957239833}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.281095, y: 1.6486707, z: -0.096129924}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1976963294
 GameObject:
   m_ObjectHideFlags: 0
@@ -4660,3 +4692,4 @@ SceneRoots:
   - {fileID: 1528540263}
   - {fileID: 1027728620}
   - {fileID: 1003910732}
+  - {fileID: 1957239834}
