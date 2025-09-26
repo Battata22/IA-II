@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class ElectricBolt : MonoBehaviour
@@ -10,8 +11,14 @@ public class ElectricBolt : MonoBehaviour
     [SerializeField] float electricDmg;
     [SerializeField] float jumpRange;
     [SerializeField] int maxBounces;
+    int bouncesLeft;
     BaseEnemy firstTarget;
-    List<BaseEnemy> targetList; 
+    List<BaseEnemy> targetList;
+
+    private void Start()
+    {
+        bouncesLeft = maxBounces;
+    }
 
     private void Update()
     {
@@ -36,6 +43,7 @@ public class ElectricBolt : MonoBehaviour
 
     IEnumerator Strike(Transform from, bool player = false)
     {
+        bouncesLeft--;
         if(player)
         {
             Collider[] enemiesInRange = Physics.OverlapSphere(from.position, jumpRange);
@@ -45,21 +53,35 @@ public class ElectricBolt : MonoBehaviour
                 var c = enemiesInRange.Where(x => x.GetComponent<BaseEnemy>())
                     .Select(x => x.GetComponent<BaseEnemy>())
                     .OrderByDescending(x => Vector3.Distance(from.position, x.gameObject.transform.position))
-                    .First();
-                var anonymous = new { a = c.name, b = c.GetComponent<Renderer>().material, d = c.Hp };
-                Debug.Log($"Daño aplicado a {anonymous.a}");
+                    .FirstOrDefault();
+                if(c != null)
+                {
+                    var anonymous = new { a = c, b = Vector3.Distance(from.position, c.gameObject.transform.position) };
+                    Debug.Log($"Daño aplicado a {anonymous.a.name}");
 
-                if (anonymous.b.color == Color.blue)
-                {
-                    c.GetDamage(electricDmg * 2);
-                    Debug.Log($"Daño aplicado: {(electricDmg * 2)}");
+                    if (anonymous.b < jumpRange)
+                    {
+                        Debug.Log($"Alcance corto {anonymous.a.name}");
+                    }
+                    else
+                    {
+                        Debug.Log($"Alcance largo {anonymous.a.name}");
+
+                    }
+
+                    if (anonymous.a.TryGetComponent(out Material mat) && mat.color == Color.blue)
+                    {
+                        c.GetDamage(electricDmg * 2);
+                        Debug.Log($"Daño aplicado: {(electricDmg * 2)}");
+                    }
+                    else
+                    {
+                        c.GetDamage(electricDmg);
+                        Debug.Log($"Daño aplicado: {(electricDmg)}");
+                    }
+                    StartCoroutine(Strike(c.transform));
                 }
-                else
-                {
-                    c.GetDamage(electricDmg);
-                    Debug.Log($"Daño aplicado: {(electricDmg)}");
-                }
-                StartCoroutine(Strike(c.transform));
+                
 
             }
         }
@@ -72,12 +94,22 @@ public class ElectricBolt : MonoBehaviour
                 var c = enemiesInRange.Where(x => x.GetComponent<BaseEnemy>())
                     .Select(x => x.GetComponent<BaseEnemy>())
                     .OrderByDescending(x => Vector3.Distance(from.position, x.gameObject.transform.position))
-                    .Skip(1)
-                    .First();
-                var anonymous = new { a = c.name, b = c.GetComponent<Renderer>().material, d = c.Hp };
-                Debug.Log($"Daño aplicado a {anonymous.a}");
+                    //.Skip(1)
+                    .FirstOrDefault(x => x != this);
+                var anonymous = new { a = c, b = Vector3.Distance(from.position, c.gameObject.transform.position) };
+                Debug.Log($"Daño aplicado a {anonymous.a.name}");
 
-                if (anonymous.b.color == Color.blue)
+                if (anonymous.b < jumpRange)
+                {
+                    Debug.Log($"Alcance corto {anonymous.a.name}");
+                }
+                else 
+                {
+                    Debug.Log($"Alcance largo {anonymous.a.name}");
+
+                }
+                Debug.Log($"Distancia {anonymous.b}");
+                if (anonymous.a.TryGetComponent(out Material mat) && mat.color == Color.blue)
                 {
                     c.GetDamage(electricDmg * 2);
                     Debug.Log($"Daño aplicado: {(electricDmg * 2)}");
@@ -88,6 +120,7 @@ public class ElectricBolt : MonoBehaviour
                     Debug.Log($"Daño aplicado: {(electricDmg)}");
                 }
 
+                if(bouncesLeft > 0)
                 StartCoroutine(Strike(c.transform));
             }
         }

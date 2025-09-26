@@ -32,7 +32,17 @@ public class AreaDetect : MonoBehaviour
     {
         foreach (var n in list)
         {
-            yield return (n.name.ToString() + " Generator");
+            yield return (n.name.ToString() + " is in range");            
+        }
+        var low = list.Where(x => x.Hp < x.MaxHp / 3);
+        if (low.Any())
+        {
+            low.ToList();
+        }
+
+        foreach (var lo in low)
+        {
+            lo.HealMe();
         }
     }
 
@@ -46,17 +56,17 @@ public class AreaDetect : MonoBehaviour
         if (_baseCharacters != null)
         {
             //var c = _baseCharacters.Where(x => x.GetComponent<NPCBehaviour>())
-            var c = _baseCharacters.Aggregate(new List<Collider>(), (acum, actual) =>
+            var c = _baseCharacters.Aggregate(new List<NPCBehaviour>(), (acum, actual) =>
             {
-                if (actual.GetComponent<NPCBehaviour>())
+                if (actual.TryGetComponent(out NPCBehaviour npc))
                 {
-                    acum.Add(actual);
+                    acum.Add(npc);
                 }
 
                 return acum;
 
-            })
-                .Select(c => c.GetComponent<NPCBehaviour>());
+            });
+                //.Select(c => c.GetComponent<NPCBehaviour>());
                 //.OrderBy(v => Vector3.Distance(transform.position, v.transform.position));
 
             _npcsInRange = c.ToArray();

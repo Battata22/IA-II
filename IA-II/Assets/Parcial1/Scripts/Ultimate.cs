@@ -11,6 +11,7 @@ public class Ultimate : MonoBehaviour
     [SerializeField] float dmg;
     [SerializeField] float penal;
     [SerializeField] List<string> affected = new();
+    int barraSobrecarga;
     PlayerBehaviour player;
 
     private void Start()
@@ -41,7 +42,30 @@ public class Ultimate : MonoBehaviour
         {
             foreach (var a in affected)
             {
-                yield return (a);
+                if (barraSobrecarga < 1)
+                {
+                    yield return (a);
+                    barraSobrecarga++;
+                }
+                else
+                {
+                    Collider[] sobrecargaRange = Physics.OverlapSphere(transform.position, range * 3);
+                    var x = sobrecargaRange.Where(x => x.GetComponent<BaseEnemy>())
+                        .Select(x => x.GetComponent<BaseEnemy>())
+                        .Where(x => x.Hp <= x.MaxHp / 4);
+                    if (sobrecargaRange.Any())
+                    {
+                        x = x.ToList();
+
+                        foreach (var enemy in x)
+                        {
+                            //Instakill
+                            enemy.GetDamage(enemy.MaxHp);
+                            yield return ($"enemigo {enemy.name} fue instakilleado");
+                        }
+                    }
+                        
+                }
             }
         }
         else

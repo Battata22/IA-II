@@ -11,7 +11,7 @@ public class FireBullet : MonoBehaviour
     [SerializeField] float fireTime;
     [SerializeField] float fireRange;
     [SerializeField] float dmg;
-    [SerializeField] List<(GameObject, float)> tupleList = new List<(GameObject, float)> ();
+    [SerializeField] List<(string, float)> tupleList = new List<(string, float)> ();
     [SerializeField] List<BaseEnemy> ordenados = new();
     void Start()
     {
@@ -32,11 +32,22 @@ public class FireBullet : MonoBehaviour
             {
                 var ran = UnityEngine.Random.Range(1, dmg);
                 e.GetDamage(ran);
-                print(ran);
-                tupleList.Add((e.gameObject, e.Hp));
+                //print(ran);
+                tupleList.Add((e.name, ran));
             }
             c.OrderBy(c => c.Hp);
             ordenados = c.ToList();
+
+            if (tupleList.Count > 0)
+            {
+                foreach (var tuple in tupleList)
+                {
+                    if (tuple.Item2 >= (dmg / 3) * 2)
+                    {
+                        print("Se hizo daño critico a " +  tuple.Item1);
+                    }
+                }
+            }
             
         }
 

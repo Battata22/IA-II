@@ -2417,6 +2417,21 @@ MonoBehaviour:
   dmg: 10
   penal: 0.5
   affected: []
+--- !u!114 &982214403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982214393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22bfee5b8cd13cb40ab9e7e9696bfe56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  electricDmg: 10
+  jumpRange: 2
+  maxBounces: 3
 --- !u!1 &1003910731
 GameObject:
   m_ObjectHideFlags: 0
@@ -4667,6 +4682,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 982214402}
+    - targetCorrespondingSourceObject: {fileID: 8223348330687346543, guid: 3b9ae85382184fc4997c92db20f8cd88,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 982214403}
   m_SourcePrefab: {fileID: 100100000, guid: 3b9ae85382184fc4997c92db20f8cd88, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
